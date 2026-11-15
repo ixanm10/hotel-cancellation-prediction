@@ -79,8 +79,4 @@ streamlit run app/app.py           # open the app
 - **Size:** below the 200,000-row guideline; approved by the instructor at Milestone 2
 - Dataset search evidence: [`docs/dataset_search.md`](docs/dataset_search.md) · column descriptions: [`docs/data_dictionary.md`](docs/data_dictionary.md)
 
-## AI tools used
 
-| AI tool | What it was used for | Where |
-|---|---|---|
-| Claude (Anthropic) | Help writing the cleaning, modelling and Streamlit code | `notebooks/`, `src/pipeline.py`, `app/app.py` |
