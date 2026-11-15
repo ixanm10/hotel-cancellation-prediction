@@ -6,7 +6,7 @@ A machine learning model that predicts at booking time whether a hotel reservati
 
 **🚀 Live app:** https://hotel-cancellation-group3.streamlit.app
 
-**📓 Notebook (Google Colab):** https://colab.research.google.com/drive/1ECBCZcbrHZaAUsSFODAoYim1JToiv2kH?usp=sharing
+**📓 Notebook – Stages 1–3 (Google Colab):** https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/01_stages_1-3_business_data_cleaning.ipynb
 
 ![ML Pipeline](https://github.com/ixanm10/hotel-cancellation-prediction/actions/workflows/pipeline.yml/badge.svg)
 
@@ -66,9 +66,8 @@ python src/pipeline.py             # full run with hyperparameter tuning
 streamlit run app/app.py           # open the app
 ```
 
-**Notebooks in Google Colab:**
+**Notebook in Google Colab:**
 - Stages 1–3 (business problem, data collection, cleaning): [Open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/01_stages_1-3_business_data_cleaning.ipynb) – the data loads from this repository automatically.
-- Full analysis: [Open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb) – the data loads from this repository automatically (about 5 minutes).
 
 ## Dataset
 
