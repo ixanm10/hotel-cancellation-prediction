@@ -36,7 +36,7 @@ Main drivers of cancellation: lead time, deposit type, country, market segment a
 ├── docs/dataset_search.md           # datasets considered, accepted and rejected
 ├── notebooks/01_stages_1-3_business_data_cleaning.ipynb   # Stages 1–3 only
 ├── notebooks/Hotel_Cancellation_Colab.ipynb   # full CRISP-DM analysis (Google Colab)
-├── reports/CDS4003_Group3_Project_Report.docx
+├── reports/CDS4003_Group3_Report_Stages_1-3.docx
 ├── src/pipeline.py                  # clean -> features -> train -> evaluate -> save model
 ├── tests/test_pipeline.py           # data quality checks
 └── requirements.txt
