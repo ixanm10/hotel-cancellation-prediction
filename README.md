@@ -6,6 +6,8 @@ A machine learning model that predicts at booking time whether a hotel reservati
 
 **🚀 Live app:** https://hotel-cancellation-group3.streamlit.app
 
+**📓 Notebook (Google Colab):** https://colab.research.google.com/drive/1ECBCZcbrHZaAUsSFODAoYim1JToiv2kH?usp=sharing
+
 ![ML Pipeline](https://github.com/ixanm10/hotel-cancellation-prediction/actions/workflows/pipeline.yml/badge.svg)
 
 ## Team
