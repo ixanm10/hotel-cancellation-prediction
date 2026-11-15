@@ -68,7 +68,7 @@ streamlit run app/app.py           # open the app
 
 **Notebooks in Google Colab:**
 - Stages 1–3 (business problem, data collection, cleaning): [Open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/01_stages_1-3_business_data_cleaning.ipynb) – the data loads from this repository automatically.
-- Full analysis: [Open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb) – upload `data/hotel_bookings.csv` to the Colab Files panel, then run all cells.
+- Full analysis: [Open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb) – the data loads from this repository automatically (about 5 minutes).
 
 ## Dataset
 
