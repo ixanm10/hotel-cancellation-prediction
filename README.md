@@ -14,7 +14,7 @@ A machine learning model that predicts at booking time whether a hotel reservati
 |------|--------|------|
 | Amna Nasser Alshamsi | [Ixanm10](https://github.com/ixanm10) | Model evaluation and comparison, Streamlit app, explaining results for hotel staff |
 | Amna Ali Alhosani | [amna2116](https://github.com/amna2116) | Data understanding and cleaning: missing values, duplicates, inconsistent categories, outliers, data quality checks |
-| Fatema Ahmed Alyileili | | Business problem and objectives, dataset comparison and justification (source, licence, limitations), Python code support |
+| Fatema Ahmed Alyileili | [FatmaAhmedAlyileili](https://github.com/FatmaAhmedAlyileili) | Business problem and objectives, dataset comparison and justification (source, licence, limitations), Python code support |
 
 ## Results (hold-out test set)
 
