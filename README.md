@@ -26,6 +26,19 @@ A machine learning model that predicts at booking time whether a hotel reservati
 
 Main drivers of cancellation: lead time, deposit type, country, market segment and special requests.
 
+## Extra analysis
+
+At the end of the full notebook ([`notebooks/Hotel_Cancellation_Colab.ipynb`](notebooks/Hotel_Cancellation_Colab.ipynb)), six extra checks:
+
+| Part | What it checks | Result |
+|------|----------------|--------|
+| A | Model choice by cross-validation (not the test set) | CV F1: Gradient Boosting 0.696, Random Forest 0.694, Decision Tree 0.648 |
+| B | Overfitting (train F1 vs test F1) | Random Forest 0.883 vs 0.707 (gap 0.18); Gradient Boosting 0.774 vs 0.706 (gap 0.07) |
+| C | Precision–recall curve | Shows the trade-off behind the threshold choice |
+| D | Final model at threshold 0.4 | Recall 0.87, precision 0.57 |
+| E | Extra EDA | Cancellation by lead time × deposit type; by customer type (Transient 30.3%, Group 9.9%) |
+| F | Removed duplicates | 42% were Group bookings (17% of all bookings), so some may have been real bookings |
+
 ## Repository structure
 
 ```
@@ -35,7 +48,7 @@ Main drivers of cancellation: lead time, deposit type, country, market segment a
 ├── docs/data_dictionary.md          # description of every column
 ├── docs/dataset_search.md           # datasets considered, accepted and rejected
 ├── notebooks/01_stages_1-3_business_data_cleaning.ipynb   # Stages 1–3 only
-├── notebooks/Hotel_Cancellation_Colab.ipynb   # full CRISP-DM analysis (Google Colab)
+├── notebooks/Hotel_Cancellation_Colab.ipynb   # full analysis, Stages 1–7 + extra analysis, with outputs
 ├── reports/CDS4003_Group3_Report_Stages_1-3.docx
 ├── src/pipeline.py                  # clean -> features -> train -> evaluate -> save model
 ├── tests/test_pipeline.py           # data quality checks
