@@ -1,0 +1,9 @@
+# Website colours (Streamlit theme) - "Old Library" palette
+# walnut #2E2522 · oxblood #5A302C · antique olive #74613F · aged paper #B99A70 · parchment #E5D8C2 · velvet #7A1020
+[theme]
+base = "light"
+primaryColor = "#5A302C"              # oxblood: buttons, sliders, links
+backgroundColor = "#F3ECDF"           # light parchment
+secondaryBackgroundColor = "#E5D8C2"  # parchment: inputs and boxes
+textColor = "#2E2522"                 # walnut
+font = "serif"

@@ -4,7 +4,7 @@ from datetime import date, timedelta
 import pandas as pd
 import streamlit as st
 
-from common import booking, load_bundle, load_reference, sidebar_footer
+from common import banner, booking, load_bundle, load_reference, risk_card, sidebar_footer
 
 sidebar_footer()
 bundle = load_bundle()
@@ -12,8 +12,7 @@ ref = load_reference()
 model, top_countries = bundle["model"], bundle["top_countries"]
 num, cat = bundle["num"], bundle["cat"]
 
-st.title("🔮 Predict a booking")
-st.caption(f"Model: {bundle.get('model_name', 'best model')} · enter the booking details and click Predict.")
+banner("predict", "🔮 Predict a booking", f"Model: {bundle.get('model_name', 'best model')} · enter the booking details and click Predict.")
 
 c1, c2 = st.columns(2)
 with c1:
@@ -56,11 +55,11 @@ if st.button("Predict cancellation risk", type="primary"):
     p, factors = booking.explain(model, raw, top_countries, ref["typical"], num, cat)
     level, action = booking.risk_level(p)
 
+    risk_card(level, p, action)
     m1, m2, m3 = st.columns(3)
     m1.metric("Cancellation probability", f"{p:.1%}")
-    m2.metric("Risk level", {"HIGH": "🔴 HIGH", "MEDIUM": "🟡 MEDIUM", "LOW": "🟢 LOW"}[level])
-    m3.metric("Revenue at risk", f"€{p * adr * nights:,.0f}", help="probability × price per night × nights")
-    st.info(f"**Suggested action:** {action}")
+    m2.metric("Revenue at risk", f"€{p * adr * nights:,.0f}", help="probability × price per night × nights")
+    m3.metric("Stay value", f"€{adr * nights:,.0f}", help="price per night × nights")
 
     st.subheader("Why this result?")
     st.caption(
@@ -77,5 +76,5 @@ if st.button("Predict cancellation risk", type="primary"):
             st.markdown(f"{arrow} **{r['factor']}**: {r['this booking']} (typical: {r['typical booking']}) → "
                         f"{'+' if r['effect'] > 0 else '−'}{abs(r['effect']) * 100:.1f} percentage points")
         chart = shown.set_index("factor")["effect"].mul(100).rename("change in risk (points)")
-        st.bar_chart(chart, horizontal=True)
+        st.bar_chart(chart, horizontal=True, color="#74613F")
         st.caption("When many inputs point the same way, changing just one of them moves the risk only a little.")

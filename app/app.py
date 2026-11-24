@@ -9,6 +9,10 @@ import streamlit as st
 
 st.set_page_config(page_title="Hotel Cancellation Risk", page_icon="🏨", layout="wide")
 
+import common  # noqa: E402
+
+common.style()
+
 pages = [
     st.Page("views/home.py", title="Home", icon="🏠", default=True),
     st.Page("views/predict.py", title="Predict a booking", icon="🔮"),

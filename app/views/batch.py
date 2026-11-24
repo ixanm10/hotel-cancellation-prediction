@@ -2,7 +2,7 @@
 import pandas as pd
 import streamlit as st
 
-from common import ROOT, booking, load_bundle, sidebar_footer
+from common import RISK_ICONS, ROOT, banner, booking, load_bundle, sidebar_footer
 
 sidebar_footer()
 bundle = load_bundle()
@@ -10,7 +10,7 @@ model, top_countries = bundle["model"], bundle["top_countries"]
 num, cat = bundle["num"], bundle["cat"]
 SAMPLE = ROOT / "data" / "sample_bookings.csv"
 
-st.title("📋 Batch prediction")
+banner("batch", "📋 Batch prediction", "Score a whole list of bookings at once and see which ones need attention.")
 st.markdown(
     "Upload a CSV file of upcoming bookings (for example, tomorrow's arrivals). Every booking gets a "
     "cancellation probability, a risk level and a suggested action, sorted from **riskiest to safest**. "
@@ -76,6 +76,7 @@ show_cols = [c for c in ["booking_id", "hotel", "arrival_date_month", "arrival_d
                          "deposit_type", "market_segment", "adr"] if c in result.columns]
 table = result[show_cols + ["cancel_probability", "risk_level", "revenue_at_risk_eur", "suggested_action", "problem"]].copy()
 table["cancel_probability"] = (table["cancel_probability"] * 100).round(1)  # shown as a percentage
+table["risk_level"] = table["risk_level"].map(lambda r: f"{RISK_ICONS.get(r, '⚪')} {r}")
 st.dataframe(
     table, hide_index=True,
     column_config={

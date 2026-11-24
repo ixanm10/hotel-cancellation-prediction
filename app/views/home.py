@@ -1,11 +1,11 @@
 """Home page: what the project is, key results and how to use the website."""
 import streamlit as st
 
-from common import FIGURES, GITHUB, sidebar_footer
+from common import FIGURES, GITHUB, banner, sidebar_footer
 
 sidebar_footer()
 
-st.title("🏨 Hotel Booking Cancellation Prediction")
+banner("home", "🏨 Hotel Booking Cancellation Prediction", "Know which bookings will cancel – before they do.")
 st.markdown(
     "Hotels lose money when guests cancel, because the empty room often cannot be sold again. "
     "This website uses a machine learning model to predict, **at booking time**, how likely a booking "

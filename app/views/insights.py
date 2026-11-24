@@ -1,13 +1,13 @@
 """Insights: what drives cancellations, using the charts from the notebook."""
 import streamlit as st
 
-from common import FIGURES, load_reference, sidebar_footer
+from common import FIGURES, banner, load_reference, sidebar_footer
 
 sidebar_footer()
 ref = load_reference()
 df = ref["df"]
 
-st.title("📊 Insights from the data")
+banner("insights", "📊 Insights from the data", "What makes a booking more likely to be cancelled.")
 st.markdown(
     f"Based on **{len(df):,} clean bookings**, of which **{ref['cancel_rate']:.1%}** were cancelled. "
     "These are the patterns the model learned from."
