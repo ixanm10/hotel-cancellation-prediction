@@ -94,3 +94,6 @@ streamlit run app/app.py           # open the app
 - Dataset search evidence: [`docs/dataset_search.md`](docs/dataset_search.md) · column descriptions: [`docs/data_dictionary.md`](docs/data_dictionary.md)
 
 
+## Use of AI tools
+
+Claude was used under the direction of Amna Nasser Alshamsi (ixanm10), who decided what to build or change, reviewed every result and approved all changes. Commits labelled "Claude" in the history were made at her request. All written analysis in the report is the team's own work.
