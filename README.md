@@ -6,6 +6,10 @@ A machine learning model that predicts at booking time whether a hotel reservati
 
 **🚀 Live app:** https://hotel-cancellation-group3.streamlit.app
 
+| Booking form | Prediction |
+|---|---|
+| <img src="figures/16_app_booking_form.png" width="420" alt="App booking form"> | <img src="figures/17_app_prediction.png" width="420" alt="App prediction showing HIGH risk"> |
+
 **📓 Notebook – Stages 1–3 (Google Colab):** https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/01_stages_1-3_business_data_cleaning.ipynb
 
 **📓 Full notebook – Stages 1–7 + extra analysis:** [view on GitHub](https://github.com/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb) · [open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb)
@@ -22,11 +26,37 @@ A machine learning model that predicts at booking time whether a hotel reservati
 
 ## Results (hold-out test set)
 
-| Model | F1 | Recall | ROC-AUC |
-|-------|----|--------|---------|
-| **Random Forest (tuned)** | **0.707** | **0.786** | **0.896** |
+| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
+|-------|----------|-----------|--------|----|---------|
+| **Random Forest (tuned)** | **0.820** | **0.643** | **0.786** | **0.707** | **0.896** |
+| Gradient Boosted Trees (tuned) | 0.811 | 0.619 | 0.820 | 0.706 | 0.899 |
+| Decision Tree (tuned) | 0.762 | 0.546 | 0.824 | 0.657 | 0.865 |
+| Logistic Regression | 0.743 | 0.525 | 0.768 | 0.623 | 0.832 |
+| Naive Bayes | 0.555 | 0.371 | 0.874 | 0.521 | 0.761 |
+| Baseline (majority class) | 0.723 | 0.000 | 0.000 | 0.000 | 0.500 |
+
+### Why we chose the final model
+
+<!-- Write 2–4 sentences here in your own words, using the facts below. -->
+
+Facts:
+- Highest test F1: Random Forest 0.707, Gradient Boosted Trees 0.706 (almost tied).
+- Cross-validation F1 (3-fold): Gradient Boosted Trees 0.696, Random Forest 0.694, Decision Tree 0.648.
+- Overfitting gap (train F1 − test F1): Random Forest 0.176, Gradient Boosted Trees 0.068, Decision Tree 0.017.
+- Go/No-Go: Random Forest passed all six checks (F1 ≥ 0.70, AUC ≥ 0.85, recall ≥ 0.75, beats baseline, saves €636,320 on the test set vs doing nothing, booking-time data only).
+- At threshold 0.4: recall 0.87, precision 0.57.
 
 Main drivers of cancellation: lead time, deposit type, country, market segment and special requests.
+
+## Key charts
+
+| | |
+|---|---|
+| <img src="figures/03_lead_time.png" width="420" alt="Cancellation rate by lead time"> | <img src="figures/04_deposit_and_requests.png" width="420" alt="Cancellation by deposit type and special requests"> |
+| <img src="figures/10_roc_curve.png" width="420" alt="ROC curves"> | <img src="figures/09_confusion_matrix.png" width="420" alt="Confusion matrix, Random Forest"> |
+| <img src="figures/12_feature_importance.png" width="420" alt="Top 10 most important attributes"> | <img src="figures/11_lift_chart.png" width="420" alt="Lift chart"> |
+
+All 17 figures are in [`figures/`](figures/).
 
 ## Extra analysis
 
@@ -49,6 +79,7 @@ At the end of the full notebook ([`notebooks/Hotel_Cancellation_Colab.ipynb`](no
 ├── data/hotel_bookings.csv          # raw dataset
 ├── docs/data_dictionary.md          # description of every column
 ├── docs/dataset_search.md           # datasets considered, accepted and rejected
+├── figures/                         # charts from the notebook + app screenshots
 ├── notebooks/01_stages_1-3_business_data_cleaning.ipynb   # Stages 1–3 only
 ├── notebooks/Hotel_Cancellation_Colab.ipynb   # full analysis, Stages 1–7 + extra analysis, with outputs
 ├── reports/CDS4003_Group3_Report_Stages_1-3.docx
