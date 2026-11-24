@@ -1,6 +1,6 @@
 # 🏨 Hotel Booking Cancellation Prediction
 
-**CDS 4003 – Data Science for Business Application | Group 3**
+**CDS 4003 – Data Science for Business Application | Group 14**
 
 A machine learning model that predicts at booking time whether a hotel reservation will be cancelled, so staff can act before the room is lost. It's built on 119,390 bookings from a City Hotel (Lisbon) and a Resort Hotel (Algarve), 2015–2017.
 
