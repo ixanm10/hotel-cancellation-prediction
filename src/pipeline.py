@@ -121,7 +121,11 @@ def build_models():
         "Logistic Regression": Pipeline([("pre", pre_linear), ("model", LogisticRegression(max_iter=2000, class_weight="balanced"))]),
         "Naive Bayes": Pipeline([("pre", pre_linear), ("model", GaussianNB())]),
         "Decision Tree": Pipeline([("pre", pre_tree), ("model", DecisionTreeClassifier(max_depth=8, class_weight="balanced", random_state=RANDOM_STATE))]),
-        "Random Forest": Pipeline([("pre", pre_tree), ("model", RandomForestClassifier(n_estimators=200, min_samples_leaf=2, class_weight="balanced", n_jobs=-1, random_state=RANDOM_STATE))]),
+        # Random Forest starts from the best settings found by tuning in the notebook (Table 5 of the report),
+        # so the quick run used by the app gives the same final model as the report.
+        "Random Forest": Pipeline([("pre", pre_tree), ("model", RandomForestClassifier(
+            n_estimators=300, max_depth=30, min_samples_leaf=4, max_features=0.5,
+            class_weight="balanced", n_jobs=-1, random_state=RANDOM_STATE))]),
         "Gradient Boosted Trees": Pipeline([("pre", pre_tree), ("model", HistGradientBoostingClassifier(class_weight="balanced", random_state=RANDOM_STATE))]),
     }
 
