@@ -39,14 +39,7 @@ Main drivers of cancellation: lead time, deposit type, country, market segment a
 
 ### Why we chose the final model
 
-<!-- Write 2–4 sentences here in your own words, using the facts below. -->
-
-Facts:
-- Highest test F1: Random Forest 0.707, Gradient Boosted Trees 0.706 (almost tied).
-- Cross-validation F1 (3-fold): Gradient Boosted Trees 0.696, Random Forest 0.694, Decision Tree 0.648.
-- Overfitting gap (train F1 − test F1): Random Forest 0.176, Gradient Boosted Trees 0.068, Decision Tree 0.017.
-- Go/No-Go: Random Forest passed all six checks (F1 ≥ 0.70, AUC ≥ 0.85, recall ≥ 0.75, beats baseline, saves €636,320 on the test set vs doing nothing, booking-time data only).
-- At threshold 0.4: recall 0.87, precision 0.57.
+Random Forest and Gradient Boosted Trees were the best performing models after tuning, with F1 scores of 0.707 and 0.706 respectively on the test set. Random Forest is the final model implemented, mainly because it had the highest test F1 score (0.707), a test accuracy of 0.820 and a precision of 0.643 compared to 0.619 for Gradient Boosted Trees, meaning fewer false alarms. However, Gradient Boosted Trees had a lower test error cost at threshold 0.4 (€167,540 compared to Random Forest's €175,620). Gradient Boosted Trees also overfit less than Random Forest, with a gap of 0.07 in train-test F1 compared to 0.18. Thus, in future versions of the system Gradient Boosted Trees deserves further exploration.
 
 ## Key charts
 
