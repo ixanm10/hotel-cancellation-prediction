@@ -27,7 +27,7 @@ with a:
 with b:
     by_band = (df.groupby("lead_time_band", observed=True)["is_canceled"].mean() * 100).round(1)
     st.dataframe(by_band.rename("cancelled (%)"))
-    st.caption("Bookings made 0–7 days ahead rarely cancel; bookings made more than a year ahead cancel about 4 times as often.")
+    st.caption("Bookings made 0–7 days ahead rarely cancel; bookings made more than a year ahead cancel almost 5 times as often.")
 
 st.subheader("2. Deposit type and special requests")
 show("04_deposit_and_requests.png", "Cancellation rate by deposit type and number of special requests")

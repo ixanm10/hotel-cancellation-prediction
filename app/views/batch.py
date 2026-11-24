@@ -64,11 +64,13 @@ st.subheader(f"Results – {st.session_state['batch_name']}")
 scored = result[ok.reindex(result.index)]
 counts = scored["risk_level"].value_counts()
 m1, m2, m3, m4 = st.columns(4)
-m1.metric("Bookings scored", f"{len(scored):,}", f"{(~ok).sum()} could not be scored" if (~ok).any() else None, delta_color="off")
+m1.metric("Bookings scored", f"{len(scored):,}")
+if (~ok).any():
+    m1.caption(f"⚠️ {(~ok).sum()} could not be scored – see the 'problem' column")
 m2.metric("🔴 High risk", f"{counts.get('HIGH', 0):,}")
 m3.metric("🟡 Medium risk", f"{counts.get('MEDIUM', 0):,}")
-m4.metric("Expected cancellations", f"{scored['cancel_probability'].sum():,.0f}",
-          f"€{scored['revenue_at_risk_eur'].sum():,.0f} revenue at risk", delta_color="off")
+m4.metric("Expected cancellations", f"{scored['cancel_probability'].sum():,.0f}")
+m4.caption(f"€{scored['revenue_at_risk_eur'].sum():,.0f} revenue at risk")
 
 show_cols = [c for c in ["booking_id", "hotel", "arrival_date_month", "arrival_date_day_of_month", "lead_time",
                          "deposit_type", "market_segment", "adr"] if c in result.columns]

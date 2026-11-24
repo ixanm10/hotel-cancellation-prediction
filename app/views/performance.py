@@ -1,4 +1,5 @@
 """Model performance: model comparison and an interactive threshold / cost explorer."""
+import altair as alt
 import numpy as np
 import pandas as pd
 import streamlit as st
@@ -66,8 +67,22 @@ with right:
     grid = booking.threshold_table(y, proba, np.round(np.arange(0.10, 0.91, 0.05), 2), cost_fn, cost_fp)
     best_t = grid.loc[grid["cost (€)"].idxmin(), "threshold"]
     st.markdown(f"**Total cost of errors by threshold** – cheapest at **{best_t:.2f}** with these costs")
-    st.line_chart(grid.set_index("threshold")[["cost (€)"]])
+    costs = grid.rename(columns={"cost (€)": "cost"})
+    x = alt.X("threshold:Q", title="Threshold", scale=alt.Scale(domain=[0.1, 0.9]))
+    line = alt.Chart(costs).mark_line(point=True).encode(
+        x=x, y=alt.Y("cost:Q", title="Total cost of errors (€)", axis=alt.Axis(format=",.0f")),
+        tooltip=[alt.Tooltip("threshold:Q"), alt.Tooltip("cost:Q", format=",.0f", title="cost (€)")])
+    marker = alt.Chart(pd.DataFrame({"threshold": [threshold]})).mark_rule(color="red", strokeDash=[4, 4]).encode(x=x)
+    st.altair_chart(line + marker)
 
-st.markdown("**Recall and precision by threshold**")
-st.line_chart(grid.set_index("threshold")[["recall", "precision"]])
+st.markdown("**Recall and precision by threshold** (red line = your threshold)")
+long = grid.melt(id_vars="threshold", value_vars=["recall", "precision"], var_name="measure", value_name="value")
+rp = alt.Chart(long).mark_line(point=True).encode(
+    x=alt.X("threshold:Q", title="Threshold", scale=alt.Scale(domain=[0.1, 0.9])),
+    y=alt.Y("value:Q", title="", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
+    color=alt.Color("measure:N", title=None),
+    tooltip=[alt.Tooltip("threshold:Q"), alt.Tooltip("measure:N"), alt.Tooltip("value:Q", format=".1%")])
+marker2 = alt.Chart(pd.DataFrame({"threshold": [threshold]})).mark_rule(color="red", strokeDash=[4, 4]).encode(
+    x=alt.X("threshold:Q", scale=alt.Scale(domain=[0.1, 0.9])))
+st.altair_chart(rp + marker2)
 st.caption("Our report recommends a threshold of **0.40**: it catches about 87% of cancellations while keeping false alarms manageable.")

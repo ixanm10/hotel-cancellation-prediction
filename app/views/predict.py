@@ -63,15 +63,10 @@ if st.button("Predict cancellation risk", type="primary"):
     st.info(f"**Suggested action:** {action}")
 
     st.subheader("Why this result?")
-    typical_raw = raw.copy()
-    for col, val in ref["typical"].items():
-        typical_raw[col] = val
-    X_typ, _ = booking.features_from_raw(typical_raw, top_countries)
-    p_typ = float(model.predict_proba(X_typ[num + cat])[0, 1])
     st.caption(
-        f"We compare this booking with a **typical booking** (risk {p_typ:.0%}): one input at a time is set to its "
-        "typical value and the model predicts again. 🔺 = this input makes cancellation **more** likely, "
-        "🔻 = **less** likely."
+        "We change **one input at a time** to its most common value in our data (for example lead time 50 days, "
+        "no deposit, Online TA) and let the model predict again. The difference shows how much that input matters "
+        "for this booking. 🔺 = this input makes cancellation **more** likely, 🔻 = **less** likely."
     )
     shown = factors[factors["effect"].abs() >= 0.005].head(6)
     if shown.empty:

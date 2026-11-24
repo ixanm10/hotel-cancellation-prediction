@@ -13,10 +13,14 @@ st.markdown(
 )
 
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Bookings analysed", "119,390", "86,625 after cleaning", delta_color="off")
-c2.metric("Cancellation rate", "27.7%", "after cleaning", delta_color="off")
-c3.metric("F1 score (test set)", "0.707", "target ≥ 0.70")
-c4.metric("ROC-AUC (test set)", "0.896", "target ≥ 0.85")
+c1.metric("Bookings analysed", "119,390")
+c1.caption("86,625 after cleaning")
+c2.metric("Cancellation rate", "27.7%")
+c2.caption("after cleaning")
+c3.metric("F1 score (test set)", "0.707")
+c3.caption("✅ target ≥ 0.70")
+c4.metric("ROC-AUC (test set)", "0.896")
+c4.caption("✅ target ≥ 0.85")
 
 st.subheader("What you can do here")
 a, b = st.columns(2)
