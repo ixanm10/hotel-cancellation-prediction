@@ -30,7 +30,7 @@ bundle = load_bundle()
 model, top_countries = bundle["model"], bundle["top_countries"]
 
 st.title("🏨 Hotel Booking Cancellation Risk")
-st.caption(f"CDS 4003 – Group 3 | Model: {bundle.get('model_name', 'best model')}")
+st.caption(f"CDS 4003 – Group 14 | Model: {bundle.get('model_name', 'best model')}")
 
 c1, c2 = st.columns(2)
 with c1:

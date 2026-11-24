@@ -1,6 +1,6 @@
 """
 Hotel Booking Cancellation Prediction - end-to-end pipeline
-CDS 4003 Group 3
+CDS 4003 Group 14
 
 Runs the same CRISP-DM steps as notebooks/Hotel_Cancellation_Colab.ipynb:
   1. Load raw data            (data/hotel_bookings.csv)
