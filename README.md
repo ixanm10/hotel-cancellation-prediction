@@ -75,7 +75,7 @@ At the end of the full notebook ([`notebooks/Hotel_Cancellation_Colab.ipynb`](no
 ├── figures/                         # charts from the notebook + app screenshots
 ├── notebooks/01_stages_1-3_business_data_cleaning.ipynb   # Stages 1–3 only
 ├── notebooks/Hotel_Cancellation_Colab.ipynb   # full analysis, Stages 1–7 + extra analysis, with outputs
-├── reports/CDS4003_Group3_Report_Stages_1-3.docx
+├── reports/CDS4003_Group14_Final_Report.pdf   # group report (PDF + Word)
 ├── src/pipeline.py                  # clean -> features -> train -> evaluate -> save model
 ├── tests/test_pipeline.py           # data quality checks
 └── requirements.txt
