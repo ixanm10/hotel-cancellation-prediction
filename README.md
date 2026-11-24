@@ -35,6 +35,8 @@ A machine learning model that predicts at booking time whether a hotel reservati
 | Naive Bayes | 0.555 | 0.371 | 0.874 | 0.521 | 0.761 |
 | Baseline (majority class) | 0.723 | 0.000 | 0.000 | 0.000 | 0.500 |
 
+Main drivers of cancellation: lead time, deposit type, country, market segment and special requests.
+
 ### Why we chose the final model
 
 <!-- Write 2–4 sentences here in your own words, using the facts below. -->
@@ -45,8 +47,6 @@ Facts:
 - Overfitting gap (train F1 − test F1): Random Forest 0.176, Gradient Boosted Trees 0.068, Decision Tree 0.017.
 - Go/No-Go: Random Forest passed all six checks (F1 ≥ 0.70, AUC ≥ 0.85, recall ≥ 0.75, beats baseline, saves €636,320 on the test set vs doing nothing, booking-time data only).
 - At threshold 0.4: recall 0.87, precision 0.57.
-
-Main drivers of cancellation: lead time, deposit type, country, market segment and special requests.
 
 ## Key charts
 
