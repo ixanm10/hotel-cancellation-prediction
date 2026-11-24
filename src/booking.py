@@ -178,3 +178,47 @@ def threshold_table(y_true, proba, thresholds, cost_fn=pipeline.COST_FN, cost_fp
                      "caught": tp, "missed": fn, "false alarms": fp, "correct stays": tn,
                      "cost (€)": fn * cost_fn + fp * cost_fp})
     return pd.DataFrame(rows)
+
+
+# ---------------------------------------------------------------- what-if simulator
+# Actions staff could encourage, and how each one changes the booking (columns -> new value).
+# Parking is left out on purpose: almost no guest with a parking space cancelled in the data, so the model
+# treats parking as a near-guarantee - true for past bookings, but not a realistic action to recommend.
+WHAT_IF_ACTIONS = {
+    "Guest books directly with the hotel": {"market_segment": "Direct", "distribution_channel": "Direct"},
+    "Guest adds a special request": {"total_of_special_requests": lambda r: r["total_of_special_requests"] + 1},
+    "Guest books 30 days before arrival": {"lead_time": lambda r: min(30, r["lead_time"])},
+    "Guest is a returning customer": {"is_repeated_guest": 1},
+}
+
+
+def _predict(model, raw, top_countries, num, cat):
+    X, problems = features_from_raw(raw, top_countries)
+    p = pd.Series(np.nan, index=raw.index)
+    if len(X):
+        p[X.index] = model.predict_proba(X[num + cat])[:, 1]
+    return p
+
+
+def what_if_actions(model, raw, top_countries, num, cat):
+    """For one booking: the new risk after each action in WHAT_IF_ACTIONS (only actions that change something)."""
+    base = float(_predict(model, raw, top_countries, num, cat).iloc[0])
+    row = raw.iloc[0]
+    rows = []
+    for name, changes in WHAT_IF_ACTIONS.items():
+        new = raw.copy()
+        for col, val in changes.items():
+            new[col] = val(row) if callable(val) else val
+        if all(_same(new.iloc[0][c], row[c]) for c in changes):
+            continue  # this booking already has it
+        p = float(_predict(model, new, top_countries, num, cat).iloc[0])
+        rows.append({"action": name, "new risk": p, "change": p - base})
+    out = pd.DataFrame(rows, columns=["action", "new risk", "change"])
+    return base, out.sort_values("change").reset_index(drop=True)
+
+
+def lead_time_curve(model, raw, top_countries, num, cat, lead_times=range(0, 366, 15)):
+    """Risk of the same booking if it had been made a different number of days before arrival."""
+    many = pd.concat([raw.assign(lead_time=lt) for lt in lead_times], ignore_index=True)
+    return pd.DataFrame({"lead_time": list(lead_times),
+                         "risk": _predict(model, many, top_countries, num, cat).to_numpy()})

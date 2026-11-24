@@ -1,4 +1,5 @@
 """Batch prediction: upload many bookings, get each one's risk, sorted from riskiest to safest."""
+import altair as alt
 import pandas as pd
 import streamlit as st
 
@@ -71,6 +72,27 @@ m2.metric("🔴 High risk", f"{counts.get('HIGH', 0):,}")
 m3.metric("🟡 Medium risk", f"{counts.get('MEDIUM', 0):,}")
 m4.metric("Expected cancellations", f"{scored['cancel_probability'].sum():,.0f}")
 m4.caption(f"€{scored['revenue_at_risk_eur'].sum():,.0f} revenue at risk")
+
+# risk band chart + filters
+LEVEL_COLORS = {"HIGH": "#7A1020", "MEDIUM": "#B99A70", "LOW": "#74613F"}
+bands = scored["risk_level"].value_counts().reindex(["HIGH", "MEDIUM", "LOW"], fill_value=0).reset_index()
+bands.columns = ["risk level", "bookings"]
+chart_col, filter_col = st.columns([3, 2])
+with chart_col:
+    st.altair_chart(alt.Chart(bands).mark_bar(cornerRadius=5).encode(
+        x=alt.X("bookings:Q", title="Bookings"), y=alt.Y("risk level:N", sort=["HIGH", "MEDIUM", "LOW"], title=None),
+        color=alt.Color("risk level:N", scale=alt.Scale(domain=list(LEVEL_COLORS), range=list(LEVEL_COLORS.values())),
+                        legend=None),
+        tooltip=["risk level", "bookings"]).properties(height=150))
+with filter_col:
+    levels = st.multiselect("Show risk levels", ["HIGH", "MEDIUM", "LOW", "not scored"],
+                            default=["HIGH", "MEDIUM", "LOW", "not scored"])
+    hotels = st.multiselect("Show hotels", sorted(result["hotel"].dropna().unique()),
+                            default=sorted(result["hotel"].dropna().unique()))
+    min_p = st.slider("Minimum cancel probability", 0, 100, 0, 5, format="%d%%")
+result = result[result["risk_level"].isin(levels) & result["hotel"].isin(hotels)
+                & (result["cancel_probability"].fillna(0) * 100 >= min_p)]
+st.caption(f"Showing {len(result):,} bookings.")
 
 show_cols = [c for c in ["booking_id", "hotel", "arrival_date_month", "arrival_date_day_of_month", "lead_time",
                          "deposit_type", "market_segment", "adr"] if c in result.columns]

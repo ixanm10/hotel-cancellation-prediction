@@ -38,3 +38,21 @@ def test_threshold_table_counts_add_up():
     t = booking.threshold_table(y, pd.Series([0.9, 0.8, 0.2, 0.1]).to_numpy(), [0.5]).iloc[0]
     assert (t["caught"], t["false alarms"], t["missed"], t["correct stays"]) == (1, 1, 1, 1)
     assert t["cost (€)"] == pipeline.COST_FN + pipeline.COST_FP
+
+
+def test_what_if_and_lead_time_curve_with_a_simple_model():
+    from sklearn.dummy import DummyClassifier
+    from sklearn.pipeline import make_pipeline
+    from sklearn.compose import make_column_transformer
+    from sklearn.preprocessing import OneHotEncoder
+
+    raw = pd.read_csv(ROOT / "data" / "sample_bookings.csv").head(20)
+    X, _ = booking.features_from_raw(raw, top_countries=["PRT"])
+    pre = make_column_transformer(("passthrough", pipeline.NUM_FEATURES),
+                                  (OneHotEncoder(handle_unknown="ignore"), pipeline.CAT_FEATURES))
+    model = make_pipeline(pre, DummyClassifier(strategy="prior")).fit(X, [0, 1] * 10)
+    one = raw.head(1)
+    base, actions = booking.what_if_actions(model, one, ["PRT"], pipeline.NUM_FEATURES, pipeline.CAT_FEATURES)
+    assert 0 <= base <= 1 and set(actions.columns) == {"action", "new risk", "change"}
+    curve = booking.lead_time_curve(model, one, ["PRT"], pipeline.NUM_FEATURES, pipeline.CAT_FEATURES)
+    assert len(curve) == 25 and curve["risk"].between(0, 1).all()
