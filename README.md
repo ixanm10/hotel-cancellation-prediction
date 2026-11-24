@@ -23,9 +23,9 @@ The Streamlit app is a small website with five pages:
 | Page | What it does |
 |------|--------------|
 | 🏠 **Home** | The problem, key results and how to read a prediction |
-| 🔮 **Predict a booking** | Enter one booking → cancellation probability, risk level, suggested action, and **why** (which inputs push the risk up or down) |
-| 📋 **Batch prediction** | Upload a CSV of bookings → every booking scored and sorted from riskiest to safest, with a download of the results (an example file is included) |
-| 📊 **Insights** | The main patterns in the data (lead time, deposit type, market segment, season) |
+| 🔮 **Predict a booking** | One-click example bookings; enter a booking → live risk card, suggested action, **why** (which inputs push the risk up or down), a **what-if simulator** (e.g. booking directly, adding a special request) and a **lead-time curve** |
+| 📋 **Batch prediction** | Upload a CSV of bookings → every booking scored and sorted from riskiest to safest, risk-band chart, filters, and a download of the results (an example file is included) |
+| 📊 **Insights** | **Interactive explorer** (filter by hotel, segment, deposit type and month; compare cancellation rates with hover details) plus the key charts from the notebook |
 | ⚙️ **Model performance** | The six models compared, plus a **threshold slider** that shows live how recall, precision and the cost of errors change |
 
 The app uses the same tuned Random Forest as the report (300 trees, max depth 30, min samples per leaf 4), so its results match the report: F1 0.707, recall 0.786, ROC-AUC 0.896.
