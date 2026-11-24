@@ -38,8 +38,9 @@ if sel.empty:
 else:
     k1, k2, k3, k4 = st.columns(4)
     k1.metric("Bookings", f"{len(sel):,}")
-    k2.metric("Cancellation rate", f"{sel['is_canceled'].mean():.1%}",
-              f"{(sel['is_canceled'].mean() - ref['cancel_rate']) * 100:+.1f} pts vs all", delta_color="inverse")
+    k2.metric("Cancellation rate", f"{sel['is_canceled'].mean():.1%}")
+    if len(sel) < len(df):
+        k2.caption(f"{(sel['is_canceled'].mean() - ref['cancel_rate']) * 100:+.1f} points vs all bookings ({ref['cancel_rate']:.1%})")
     k3.metric("Average price per night", f"€{sel['adr'].mean():,.0f}")
     k4.metric("Revenue lost to cancellations", f"€{(sel['total_revenue'] * sel['is_canceled']).sum() / 1e6:,.2f}M")
 
@@ -66,7 +67,7 @@ else:
 
     trend = (sel.groupby(["arrival_month_num", "hotel"])["is_canceled"].mean().reset_index()
              .assign(month=lambda d: d["arrival_month_num"].map(lambda m: MONTHS[int(m) - 1])))
-    line = alt.Chart(trend).mark_line(point=True).encode(
+    line = alt.Chart(trend).mark_line(point=True, strokeWidth=3).encode(
         x=alt.X("month:N", sort=MONTHS, title="Arrival month"),
         y=alt.Y("is_canceled:Q", title="Cancellation rate", axis=alt.Axis(format="%")),
         color=alt.Color("hotel:N", scale=alt.Scale(range=[OXBLOOD, OLIVE]), title=None),

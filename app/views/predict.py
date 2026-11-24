@@ -130,7 +130,7 @@ with tab_why:
         data = shown.assign(points=shown["effect"] * 100)
         chart = alt.Chart(data).mark_bar(cornerRadius=4).encode(
             x=alt.X("points:Q", title="Change in risk (percentage points)"),
-            y=alt.Y("factor:N", sort="-x", title=None),
+            y=alt.Y("factor:N", sort="-x", title=None, axis=alt.Axis(labelLimit=260)),
             color=alt.condition("datum.points > 0", alt.value(VELVET), alt.value(OLIVE)),
             tooltip=["factor", "this booking", "typical booking", alt.Tooltip("points:Q", format="+.1f")])
         st.altair_chart(chart)
@@ -151,7 +151,7 @@ with tab_whatif:
         bars = pd.concat([pd.DataFrame([{"action": "Now", "new risk": base}]), actions[["action", "new risk"]]])
         chart = alt.Chart(bars).mark_bar(cornerRadius=4).encode(
             x=alt.X("new risk:Q", title="Cancellation risk", axis=alt.Axis(format="%"), scale=alt.Scale(domain=[0, 1])),
-            y=alt.Y("action:N", sort=None, title=None),
+            y=alt.Y("action:N", sort=None, title=None, axis=alt.Axis(labelLimit=320)),
             color=alt.condition("datum.action == 'Now'", alt.value(OXBLOOD), alt.value(OLIVE)),
             tooltip=["action", alt.Tooltip("new risk:Q", format=".1%")])
         st.altair_chart(chart)
@@ -161,8 +161,8 @@ with tab_lead:
     curve = booking.lead_time_curve(model, raw, top_countries, num, cat)
     st.markdown("The same booking, if it had been made a different number of days before arrival. "
                 "The big dot shows this booking.")
-    line = alt.Chart(curve).mark_line(point=True, color=OXBLOOD).encode(
-        x=alt.X("lead_time:Q", title="Lead time (days before arrival)"),
+    line = alt.Chart(curve).mark_line(point=alt.OverlayMarkDef(color=OXBLOOD), color=OXBLOOD).encode(
+        x=alt.X("lead_time:Q", title="Lead time (days before arrival)", scale=alt.Scale(domain=[0, 365])),
         y=alt.Y("risk:Q", title="Cancellation risk", axis=alt.Axis(format="%"), scale=alt.Scale(domain=[0, 1])),
         tooltip=[alt.Tooltip("lead_time:Q", title="lead time"), alt.Tooltip("risk:Q", format=".1%")])
     now = alt.Chart(pd.DataFrame({"lead_time": [ss["lead_time"]], "risk": [p]})).mark_point(
