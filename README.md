@@ -4,7 +4,7 @@
 
 A machine learning model that predicts at booking time whether a hotel reservation will be cancelled, so staff can act before the room is lost. It's built on 119,390 bookings from a City Hotel (Lisbon) and a Resort Hotel (Algarve), 2015–2017.
 
-**🚀 Live app:** https://hotel-cancellation-group14.streamlit.app
+**🚀 Project website (live app):** https://hotel-cancellation-group14.streamlit.app
 
 | Booking form | Prediction |
 |---|---|
@@ -15,6 +15,20 @@ A machine learning model that predicts at booking time whether a hotel reservati
 **📓 Full notebook – Stages 1–7 + extra analysis:** [view on GitHub](https://github.com/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb) · [open in Colab](https://colab.research.google.com/github/ixanm10/hotel-cancellation-prediction/blob/main/notebooks/Hotel_Cancellation_Colab.ipynb)
 
 ![ML Pipeline](https://github.com/ixanm10/hotel-cancellation-prediction/actions/workflows/pipeline.yml/badge.svg)
+
+## Project website
+
+The Streamlit app is a small website with five pages:
+
+| Page | What it does |
+|------|--------------|
+| 🏠 **Home** | The problem, key results and how to read a prediction |
+| 🔮 **Predict a booking** | Enter one booking → cancellation probability, risk level, suggested action, and **why** (which inputs push the risk up or down) |
+| 📋 **Batch prediction** | Upload a CSV of bookings → every booking scored and sorted from riskiest to safest, with a download of the results (an example file is included) |
+| 📊 **Insights** | The main patterns in the data (lead time, deposit type, market segment, season) |
+| ⚙️ **Model performance** | The six models compared, plus a **threshold slider** that shows live how recall, precision and the cost of errors change |
+
+The app uses the same tuned Random Forest as the report (300 trees, max depth 30, min samples per leaf 4), so its results match the report: F1 0.707, recall 0.786, ROC-AUC 0.896.
 
 ## Team
 
@@ -68,7 +82,10 @@ At the end of the full notebook ([`notebooks/Hotel_Cancellation_Colab.ipynb`](no
 
 ```
 ├── .github/workflows/pipeline.yml   # GitHub Actions: runs the pipeline on every push
-├── app/app.py                       # Streamlit app (risk score for a new booking)
+├── app/app.py                       # Streamlit website (page menu)
+├── app/common.py                    # loads the model and data once for all pages
+├── app/views/                       # the five website pages
+├── data/sample_bookings.csv         # 40 example bookings for the batch page
 ├── data/hotel_bookings.csv          # raw dataset
 ├── docs/data_dictionary.md          # description of every column
 ├── docs/dataset_search.md           # datasets considered, accepted and rejected
@@ -76,7 +93,9 @@ At the end of the full notebook ([`notebooks/Hotel_Cancellation_Colab.ipynb`](no
 ├── notebooks/01_stages_1-3_business_data_cleaning.ipynb   # Stages 1–3 only
 ├── notebooks/Hotel_Cancellation_Colab.ipynb   # full analysis, Stages 1–7 + extra analysis, with outputs
 ├── src/pipeline.py                  # clean -> features -> train -> evaluate -> save model
+├── src/booking.py                   # website helpers: features for new bookings, explanation, thresholds
 ├── tests/test_pipeline.py           # data quality checks
+├── tests/test_booking.py            # checks for the website helpers
 └── requirements.txt
 ```
 

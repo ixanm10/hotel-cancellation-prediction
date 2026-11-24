@@ -80,7 +80,7 @@ long = grid.melt(id_vars="threshold", value_vars=["recall", "precision"], var_na
 rp = alt.Chart(long).mark_line(point=True).encode(
     x=alt.X("threshold:Q", title="Threshold", scale=alt.Scale(domain=[0.1, 0.9])),
     y=alt.Y("value:Q", title="", scale=alt.Scale(domain=[0, 1]), axis=alt.Axis(format="%")),
-    color=alt.Color("measure:N", title=None),
+    color=alt.Color("measure:N", title=None, scale=alt.Scale(domain=["recall", "precision"], range=["#2b6cb0", "#dd6b20"])),
     tooltip=[alt.Tooltip("threshold:Q"), alt.Tooltip("measure:N"), alt.Tooltip("value:Q", format=".1%")])
 marker2 = alt.Chart(pd.DataFrame({"threshold": [threshold]})).mark_rule(color="red", strokeDash=[4, 4]).encode(
     x=alt.X("threshold:Q", scale=alt.Scale(domain=[0.1, 0.9])))
