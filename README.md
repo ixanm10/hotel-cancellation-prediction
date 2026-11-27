@@ -6,6 +6,8 @@ A machine learning model that predicts at booking time whether a hotel reservati
 
 **🚀 Project website (live app):** https://hotel-cancellation-group14.streamlit.app
 
+**📄 Final group report (PDF):** [reports/CDS4003_Group14_Final_Report.pdf](reports/CDS4003_Group14_Final_Report.pdf)
+
 | Booking form | Prediction |
 |---|---|
 | <img src="figures/16_app_booking_form.png" width="420" alt="App booking form"> | <img src="figures/17_app_prediction.png" width="420" alt="App prediction showing HIGH risk"> |
@@ -92,6 +94,7 @@ At the end of the full notebook ([`notebooks/Hotel_Cancellation_Colab.ipynb`](no
 ├── figures/                         # charts from the notebook + app screenshots
 ├── notebooks/01_stages_1-3_business_data_cleaning.ipynb   # Stages 1–3 only
 ├── notebooks/Hotel_Cancellation_Colab.ipynb   # full analysis, Stages 1–7 + extra analysis, with outputs
+├── reports/CDS4003_Group14_Final_Report.pdf   # final group report
 ├── src/pipeline.py                  # clean -> features -> train -> evaluate -> save model
 ├── src/booking.py                   # website helpers: features for new bookings, explanation, thresholds
 ├── tests/test_pipeline.py           # data quality checks
